@@ -22,12 +22,12 @@ requestHandler.use(cors())
 
 requestHandler.use(express.json());
 
-
+// i need a query that selects the first and last name of the person who chekcked in and details on the persons room
 requestHandler.get('/api/v1/nomad-app', async (req, res) => {
 try{
     const singleCheckIn = await fetchSingleCheck_In()
     res.send(singleCheckIn)
 }catch(e){
     console.log(e)
-    req.status(500).send({"error":"Server Error"})
+    res.status(500).send({"error":"Server Error"})
 }});
