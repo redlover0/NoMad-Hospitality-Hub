@@ -10,17 +10,20 @@ export default function Home() {
     <View
       style={styles.container}
     >
-      {/*/!*  <Image source={require("../assets/images/main-show-drone_01-min-scaled.jpg")} style={{width: 200, height: 300}}*!/*/}
-      {/*/!*  ></Image>*!/*/}
-      {/*/!*<Text style={styles.title}>Hello.</Text>*!/*/}
-      {/*/!*  <TouchableOpacity onPress={() => alert('Order_food')}>*!/*/}
-      {/*/!*      <Text>Order_food</Text>*!/*/}
-      {/*/!*  </TouchableOpacity>*!/*/}
+      <Text>
+        Home Screen Page
+      </Text>
+      {/*  <Image source={require("../assets/images/main-show-drone_01-min-scaled.jpg")} style={{width: 200, height: 300}}*/}
+      {/*  ></Image>*/}
+      {/*<Text style={styles.title}>Hello.</Text>*/}
+      {/*  <TouchableOpacity onPress={() => alert('Order_food')}>*/}
+      {/*      <Text>Order_food</Text>*/}
+      {/*  </TouchableOpacity>*/}
 
-      {/*/!*  <Pressable onPress={() => alert('About The Creator, How to buy/ contact info')}>*!/*/}
-      {/*/!*      <Text>About me - pressable </Text>*!/*/}
-      {/*/!*  </Pressable>*!/*/}
-      {/*        <Link href="/(tabs)/Order_food">*/}
+      {/*  <Pressable onPress={() => alert('About The Creator, How to buy/ contact info')}>*/}
+      {/*      <Text>About me - pressable </Text>*/}
+      {/*  </Pressable>*/}
+      {/*        <Link href="/(tabs)">*/}
       {/*            <Text>Visit Login</Text>*/}
       {/*        </Link>*/}
     </View>
