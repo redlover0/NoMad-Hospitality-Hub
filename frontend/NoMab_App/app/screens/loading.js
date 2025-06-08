@@ -1,4 +1,3 @@
-// src/screens/LoadingScreen.js
 import React, { useEffect } from 'react'; // Import useEffect
 import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -6,17 +5,14 @@ import {SafeAreaView} from "react-native-safe-area-context";
 
 const { width, height } = Dimensions.get('window');
 
-const Loading = ({ navigation }) => { // Receive navigation prop
+const Loading = ({ navigation }) => {
     useEffect(() => {
-        // Simulate some loading time
         const timer = setTimeout(() => {
-            navigation.replace('Home'); // Use .replace() to prevent going back to loading screen
-        }, 2000); // 3-second delay
+            navigation.replace('Tabs');
+        }, 2000);
 
-        // Cleanup the timer if the component unmounts before the timeout
         return () => clearTimeout(timer);
-    }, [navigation]); // Dependency array: re-run if navigation object changes (unlikely here, but good practice)
-
+    }, [navigation]);
     return (
         <View style={styles.fullScreenBackground}>
         <SafeAreaView style={styles.safeArea}>
@@ -27,7 +23,7 @@ const Loading = ({ navigation }) => { // Receive navigation prop
             {/*    end={{ x: 1, y: 1 }}*/}
             {/*/>*/}
             <Image
-                source={require('../../assets/images/Monogram_Master_M_White (1).png')} // **Adjust path based on your structure**
+                source={require('../../assets/images/Monogram_Master_M_White (1).png')}
                 style={styles.logo}
                 resizeMode="contain"
             />

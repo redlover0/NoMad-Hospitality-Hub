@@ -5,7 +5,7 @@ import Order_food from "./order_food";
 import Room_service from "./room_service";
 // import {Link} from "expo-router"; // Uncomment if you want to use Link for navigation
 
-export default function Home() {
+export default function Index() {
   return (
     <View
       style={styles.container}
@@ -23,9 +23,6 @@ export default function Home() {
       {/*  <Pressable onPress={() => alert('About The Creator, How to buy/ contact info')}>*/}
       {/*      <Text>About me - pressable </Text>*/}
       {/*  </Pressable>*/}
-      {/*        <Link href="/(tabs)">*/}
-      {/*            <Text>Visit Login</Text>*/}
-      {/*        </Link>*/}
     </View>
   );
 }
