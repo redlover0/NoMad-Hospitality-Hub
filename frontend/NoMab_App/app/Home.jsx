@@ -2,6 +2,7 @@ import {Dimensions, Image, Pressable, ScrollView, Text, TouchableOpacity, View, 
 // import {styles} from "../styles/login.styles.js";
 import React from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {Ionicons} from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get('window');
 
@@ -16,8 +17,11 @@ export default function Home({ navigation }) {
         <View style={styles.headerContainer}>
          <View>
              <Text style={styles.Header}>Welcome, Dhamari</Text>
-             <Text style={styles.roomInfo}>YOO</Text>
+             <Text style={styles.roomInfo}>Floor 6 - Suite Royal Best</Text>
          </View>
+            <TouchableOpacity style={{padding: 10}}>
+                <Ionicons name="menu" size={30} color="black"/>
+            </TouchableOpacity>
             </View>
         </ScrollView>
       </SafeAreaView>
