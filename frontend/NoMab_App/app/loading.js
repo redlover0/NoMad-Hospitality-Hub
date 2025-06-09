@@ -8,13 +8,13 @@ const { width, height } = Dimensions.get('window');
 const Loading = ({ navigation }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigation.replace('Tabs');
+            navigation.replace('Home');
         }, 2000);
 
         return () => clearTimeout(timer);
     }, [navigation]);
     return (
-        <View style={styles.fullScreenBackground}>
+        <View style={styles.background}>
         <SafeAreaView style={styles.safeArea}>
             {/*<LinearGradient*/}
             {/*    colors={['#4c669f', '#3b5998', '#192f6a']}*/}
@@ -23,11 +23,11 @@ const Loading = ({ navigation }) => {
             {/*    end={{ x: 1, y: 1 }}*/}
             {/*/>*/}
             <Image
-                source={require('../../assets/images/Monogram_Master_M_White (1).png')}
+                source={require('../assets/images/Monogram_Master_M_White (1).png')}
                 style={styles.logo}
                 resizeMode="contain"
             />
-            <Image source={require("../../assets/images/Group 5.svg")}
+            <Image source={require("../assets/images/Group 5.svg")}
                    style={{width: 200, height: 200}}/>
         </SafeAreaView>
         </View>
@@ -35,11 +35,11 @@ const Loading = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    fullScreenBackground: {
-        flex: 1, // Makes this View take up the entire screen space
-        backgroundColor: '#003366', // The deep blue color for the entire background
-        justifyContent: 'center', // Center content vertically
-        alignItems: 'center',     // Center content horizontally
+    background: {
+        flex: 1,
+        backgroundColor: '#003366',
+        justifyContent: 'center', // center
+        alignItems: 'center', // center
     },
     container: {
         flex: 1,
