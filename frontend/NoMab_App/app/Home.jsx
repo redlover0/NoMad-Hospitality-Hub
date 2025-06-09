@@ -14,16 +14,10 @@ const IMAGES = [
 
 const {width} = Dimensions.get('window'); // Only need width for calculations
 
-export default function Home({navigation}) {
+export default function Home() {
     const onclick = (buttonName) => {
         console.log(`Clicked ${buttonName}`);
     }
-
-    const carouselHorizontalPadding = Spacings.s4;
-    const itemGap = Spacings.s3;
-
-    // calculate the width of each pages
-    const pageWidth = width - (carouselHorizontalPadding * 2) - itemGap;
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -39,10 +33,7 @@ export default function Home({navigation}) {
                 </View>
 
                 <Carousel
-                    initialPage={INITIAL_PAGE} // start at image 0
-                    pageWidth={pageWidth}
-                    itemSpacings={itemGap} // gap between each image
-                    containerMarginHorizontal={carouselHorizontalPadding}
+                    initialPage={INITIAL_PAGE}
                     containerStyle={styles.carouselContainer}
                     pageControlPosition={Carousel.pageControlPositions.UNDER}
                     allowAccessibleLayout
@@ -56,6 +47,35 @@ export default function Home({navigation}) {
                         />
                     ))}
                 </Carousel>
+                <View style={styles.servicesContainer}>
+                    <Text style={styles.quickService}>
+                        Quick Services
+                    </Text>
+                    <View style={styles.buttonGrid}>
+                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => onclick('Order Food')}>
+                            <Ionicons name="restaurant-outline" size={24} color="#003366"/>
+                            <Text style={styles.buttonText}>Room Service</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => onclick('Housekeeping')}>
+                            <Ionicons name="bed-outline" size={24} color="#003366"/>
+                            <Text style={styles.buttonText}>Housekeeping</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => onclick('Concierge')}>
+                            <Ionicons name="information-circle-outline" size={24} color="#003366"/>
+                            <Text style={styles.buttonText}>Concierge</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => onclick('Amenities')}>
+                            <Ionicons name="fitness-outline" size={24} color="#003366"/>
+                            <Text style={styles.buttonText}>Amenities</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttomPictureContainer}>
+                        <Image
+                            source={require('../assets/images/Group 5.svg')}
+                            style={{width: 100, height: 100}}
+                        />
+                    </View>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -90,7 +110,6 @@ const styles = StyleSheet.create({
     carouselContainer: {
         height: 200,
         marginBottom: 20,
-        // debugging borders
         // borderWidth: 1,
         // borderColor: '#ccc',
         // borderRadius: 8,
@@ -101,4 +120,45 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderRadius: 8,
     },
+    servicesContainer: {
+        flex: 1,
+    },
+    quickService: {
+        paddingBottom: 10,
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
+    buttonGrid: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+    },
+    buttonGridItem: {
+        width: (width - 40 - 20) / 2,
+        height: 120,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    buttonText: {
+        marginTop: 8,
+        color: '#003366',
+        fontSize: 16,
+        fontWeight: '500',
+    },
+    buttomPictureContainer: {
+        alignItems: 'center',
+        marginTop: 20,
+        paddingBottom: 20,
+    }
 });
