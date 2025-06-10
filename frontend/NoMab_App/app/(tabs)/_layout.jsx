@@ -4,8 +4,8 @@ import {Tabs} from "expo-router";
 
 export default function TabLayout() {
   return <Tabs>
-      <Tabs.Screen name="Order_food" options={{headerShown: false}}/>
-      <Tabs.Screen name="Room_service" options={{headerShown: false}}/>
-      <Tabs.Screen name="Home" options={{headerShown: false}}/>
+      {/*<Tabs.Screen name="order_food" options={{headerShown: false}}/>*/}
+      {/*<Tabs.Screen name="room_service" options={{headerShown: false}}/>*/}
+      {/*<Tabs.Screen name="Index" options={{headerShown: false}}/>*/}
   </Tabs>
 }

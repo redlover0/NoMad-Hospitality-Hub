@@ -2,17 +2,21 @@ import React, { useEffect } from 'react'; // Import useEffect
 import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from "react-native-safe-area-context";
+import { useRouter } from 'expo-router';
 
 const { width, height } = Dimensions.get('window');
 
 const Loading = ({ navigation }) => {
+    const router = useRouter();
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigation.replace('Home');
+            navigation.replace('home');
         }, 2000);
 
         return () => clearTimeout(timer);
     }, [navigation]);
+
+
     return (
         <View style={styles.background}>
         <SafeAreaView style={styles.safeArea}>

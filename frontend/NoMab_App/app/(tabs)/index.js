@@ -5,7 +5,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {Ionicons} from "@expo/vector-icons";
 
 import {Carousel, Spacings} from "react-native-ui-lib";
-import {useRouter} from "expo-router";
+import {Tabs} from "expo-router";
 
 const INITIAL_PAGE = 0; // Keeping it at 0 to start with the first image
 const IMAGES = [
@@ -16,17 +16,9 @@ const IMAGES = [
 
 const {width} = Dimensions.get('window'); // Only need width for calculations
 
-export default function Home({navigation}) { // Make sure it's exported as default
+export default function Home() { // Make sure it's exported as default
     const onclick = (buttonName) => {
         console.log(`Clicked ${buttonName}`);
-    }
-
-    const roomServiceNavigate = () => {
-        navigation.navigate('room_service');
-    }
-
-    const aboutUsNavigate = () => {
-        navigation.navigate('aboutUs');
     }
 
     return (
@@ -37,8 +29,8 @@ export default function Home({navigation}) { // Make sure it's exported as defau
                         <Text style={styles.Header}>Welcome, Dhamari</Text>
                         <Text style={styles.roomInfo}>Floor 6 - Suite Royal Best</Text>
                     </View>
-                    <TouchableOpacity style={{padding: 10}} onPress={() => aboutUsNavigate()} >
-                        <Ionicons name="menu" size={30} color="black" />
+                    <TouchableOpacity style={{padding: 10}} onPress={() => onclick('Menu Button')}>
+                        <Ionicons name="menu" size={30} color="black"/>
                     </TouchableOpacity>
                 </View>
 
@@ -62,7 +54,7 @@ export default function Home({navigation}) { // Make sure it's exported as defau
                         Quick Services
                     </Text>
                     <View style={styles.buttonGrid}>
-                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => roomServiceNavigate()}>
+                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => onclick('Order Food')}>
                             <Ionicons name="restaurant-outline" size={24} color="#003366"/>
                             <Text style={styles.buttonText}>Room Service</Text>
                         </TouchableOpacity>
@@ -82,7 +74,7 @@ export default function Home({navigation}) { // Make sure it's exported as defau
                     <View style={styles.buttomPictureContainer}>
                         {/* Assuming you have this image in your assets folder */}
                         <Image
-                            source={require('../assets/images/Group 5.svg')}
+                            source={require('../../assets/images/adaptive-icon.png')}
                             style={{width: 100, height: 100}}
                         />
                     </View>
