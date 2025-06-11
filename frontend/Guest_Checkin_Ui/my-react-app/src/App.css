@@ -1,0 +1,128 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------------------- */
+/* Hotel Check-in Styles  */
+/* ---------------------- */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  padding: 40px;
+  text-align: center;
+  background-color: white;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: left;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 24px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.input {
+  width: 250px;
+  padding: 10px;
+  background-color: #d3d3d3;
+  border: none;
+}
+
+.dropdown {
+  margin-bottom: 40px;
+}
+
+.select {
+  padding: 10px;
+  background-color: #d3d3d3;
+  border: none;
+  color: #000;
+  opacity: 1; 
+  -webkit-text-fill-color: #000;
+}
+
+.rooms-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: calc(50% - 230px); 
+}
+
+.available-rooms-label {
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-transform: lowercase;
+}
+
+.rooms {
+  display: flex;
+  gap: 20px;
+}
+
+.room-box {
+  width: 80px;
+  height: 80px;
+  background-color: #b0b0b0; 
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 4px;
+}
