@@ -1,26 +1,23 @@
 import {View, Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native'
-import React from 'react'
 import {Ionicons} from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useNavigation} from "expo-router";
-import { MultipleSelectList } from 'react-native-dropdown-select-list'
-import { useState } from 'react';
+import {MultipleSelectList} from 'react-native-dropdown-select-list'
 
-const [selected, setSelected] = useState([]);
-
+import {useState} from 'react';
 
 const data = [
-    {key:'1', value:'Mobiles', disabled:true},
-    {key:'2', value:'Appliances'},
-    {key:'3', value:'Cameras'},
-    {key:'4', value:'Computers', disabled:true},
-    {key:'5', value:'Vegetables'},
-    {key:'6', value:'Diary Products'},
-    {key:'7', value:'Drinks'},
+    {key: '1', value: 'Mobiles', disabled: false},
+    {key: '2', value: 'Appliances'},
+    {key: '3', value: 'Cameras'},
+    {key: '4', value: 'Computers', disabled: false},
+    {key: '5', value: 'Vegetables'},
+    {key: '6', value: 'Diary Products'},
+    {key: '7', value: 'Drinks'},
 ]
 
-
 export default function AboutUs() {
+    const [selected, setSelected] = useState([]);
     const Navigation = useNavigation();
     const backNavigate = () => {
         Navigation.goBack();
@@ -34,14 +31,14 @@ export default function AboutUs() {
                         style={styles.backButton}
                         onPress={backNavigate}
                     >
-                        <Ionicons name="arrow-back-outline" size={30} color="black" />
+                        <Ionicons name="arrow-back-outline" size={30} color="black"/>
                     </TouchableOpacity>
                     <View style={styles.headerTitleWrapper}>
                         <Text style={styles.headerTitle}>House Keeping</Text>
                     </View>
-                    <View style={styles.rightPlaceholder} />
+                    <View style={styles.rightPlaceholder}/>
                 </View>
-                <View style={styles.cardContainer}>
+                <View style={[styles.cardContainer, {height: 400}]}>
                     <View style={styles.cardHeaderContainer}>
                         <Ionicons name="information-circle-outline" size={40}></Ionicons>
                     </View>
@@ -54,13 +51,46 @@ export default function AboutUs() {
                             Praesent euismod, tortor eu tincidunt efficitur,
                         </Text>
                     </View>
-                    <View style={{padding: 10, backgroundColor: 'white', borderRadius: 8, marginTop: 30}}>
+                    <View style={styles.cardPlaceholder}>
+                        <Text>
+
+                        </Text>
+                    </View>
+                    <View style={{padding: 10, backgroundColor: 'white', borderRadius: 8}}>
+                        <View>
+                            <Text style={{fontWeight: 'bold', fontSize: 18, paddingRight: 50, paddingBottom: 10, alignSelf: 'flex-start'}}>
+                                Service Type:
+                            </Text>
+                        </View>
+                        <View>
                         <MultipleSelectList
-                            setSelected={(value) => setSelected(value)}
+                            setSelected={(val) => setSelected(val)}
                             data={data}
                             save="value"
-                            onSelect={() => alert(selected)}
+                            onSelect={() => console.log(selected)}
                             label="Categories"
+                            placeholder="Select Room Service Categories"
+                            searchPlaceholder={"Search Bar"}
+                        />
+                        </View>
+                        <View style={styles.cardPlaceholder}>
+                            <Text>
+
+                            </Text>
+                        </View>
+                        <View style={{padding: 10, backgroundColor: 'white', borderRadius: 8}}>
+                            <Text style={{fontWeight: 'bold', fontSize: 18, paddingRight: 50, paddingBottom: 10, alignSelf: 'flex-start'}}>
+                                Service Type:
+                            </Text>
+                        </View>
+                        <MultipleSelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={data}
+                            save="value"
+                            onSelect={() => console.log(selected)}
+                            label="Categories"
+                            placeholder="Select Room Service Categories"
+                            searchPlaceholder={"Search Bar"}
                         />
                     </View>
                 </View>
@@ -177,5 +207,12 @@ const styles = StyleSheet.create({
     cardContent: {
         padding: 10,
         flexWrap: 'wrap',
+    },
+    cardPlaceholder: {
+        height: 30,
+        width: '100%',
+        margin: 10,
+        alignSelf: 'center',
+        backgroundColor: '#F2F2F2'
     }
 });
