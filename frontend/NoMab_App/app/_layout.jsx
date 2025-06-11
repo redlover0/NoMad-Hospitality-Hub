@@ -16,8 +16,8 @@ export default function RootLayout() {
                           options={{headerShown: false, presentation: 'modal', animation: 'slide_from_bottom'}}/>
             <Stack.Screen name="home" component={Home} options={{headerShown: false,title: 'Home' }}/>
             <Stack.Screen name="tab" component={TabLayout} options={{headerShown: false}}/>
-            <Stack.Screen name="room_service" component={Room} options={{headerShown: true, title: 'Room Service', animation: 'slide_from_bottom', }}/>
-            <Stack.Screen name="aboutUs" component={AboutUs} options={{headerShown: true, title: 'About Us', animation: 'slide_from_right',}}/>
+            <Stack.Screen name="room_service" component={Room} options={{headerShown: false, title: 'Room Service', animation: 'slide_from_bottom', }}/>
+            <Stack.Screen name="aboutUs" component={AboutUs} options={{headerShown: false, title: 'About Us', animation: 'slide_from_right',}}/>
         </Stack.Navigator>
     );
 }
