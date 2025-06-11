@@ -5,9 +5,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {Ionicons} from "@expo/vector-icons";
 
 import {Carousel, Spacings} from "react-native-ui-lib";
-
-const {width} = Dimensions.get('window'); // Only need width for calculations
-
+import {useRouter} from "expo-router";
 
 const INITIAL_PAGE = 0; // Keeping it at 0 to start with the first image
 const IMAGES = [
@@ -15,6 +13,8 @@ const IMAGES = [
     'https://michigancentral.com/wp-content/uploads/2025/05/2025-0520-BGCSW-MCS-Autonomous-Innovation-Views-2-2-scaled.png',
     'https://michigancentral.com/wp-content/uploads/2025/05/Michigan-Central-Station-Exteriors-QEA-CB-0009-scaled.jpg'
 ];
+
+const {width} = Dimensions.get('window'); // Only need width for calculations
 
 export default function Home({navigation}) { // Make sure it's exported as default
     const onclick = (buttonName) => {
@@ -64,7 +64,7 @@ export default function Home({navigation}) { // Make sure it's exported as defau
                     <View style={styles.buttonGrid}>
                         <TouchableOpacity style={styles.buttonGridItem} onPress={() => roomServiceNavigate()}>
                             <Ionicons name="restaurant-outline" size={24} color="#003366"/>
-                            <Text style={styles.buttonText}>House Keeping</Text>
+                            <Text style={styles.buttonText}>Room Service</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonGridItem} onPress={() => onclick('Housekeeping')}>
                             <Ionicons name="bed-outline" size={24} color="#003366"/>
@@ -92,7 +92,7 @@ export default function Home({navigation}) { // Make sure it's exported as defau
     );
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
         backgroundColor: '#F2F2F2',

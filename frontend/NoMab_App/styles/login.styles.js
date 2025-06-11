@@ -1,7 +1,4 @@
-import {Dimensions, StyleSheet} from "react-native";
-
-const {width} = Dimensions.get('window'); // Only need width for calculations
-
+import {StyleSheet} from "react-native";
 
 export const styles = StyleSheet.create({
     safeArea: {
