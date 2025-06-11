@@ -3,6 +3,21 @@ import React from 'react'
 import {Ionicons} from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useNavigation} from "expo-router";
+import { MultipleSelectList } from 'react-native-dropdown-select-list'
+import { useState } from 'react';
+
+const [selected, setSelected] = useState([]);
+
+
+const data = [
+    {key:'1', value:'Mobiles', disabled:true},
+    {key:'2', value:'Appliances'},
+    {key:'3', value:'Cameras'},
+    {key:'4', value:'Computers', disabled:true},
+    {key:'5', value:'Vegetables'},
+    {key:'6', value:'Diary Products'},
+    {key:'7', value:'Drinks'},
+]
 
 
 export default function AboutUs() {
@@ -29,6 +44,24 @@ export default function AboutUs() {
                 <View style={styles.cardContainer}>
                     <View style={styles.cardHeaderContainer}>
                         <Ionicons name="information-circle-outline" size={40}></Ionicons>
+                    </View>
+                    <View>
+                        <Text style={styles.cardHeaderText}>
+                            Your Assigned agent is: Linda
+                        </Text>
+                        <Text style={{padding: 10, backgroundColor: 'white', borderRadius: 8, marginTop: 10}}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Praesent euismod, tortor eu tincidunt efficitur,
+                        </Text>
+                    </View>
+                    <View style={{padding: 10, backgroundColor: 'white', borderRadius: 8, marginTop: 30}}>
+                        <MultipleSelectList
+                            setSelected={(value) => setSelected(value)}
+                            data={data}
+                            save="value"
+                            onSelect={() => alert(selected)}
+                            label="Categories"
+                        />
                     </View>
                 </View>
             </SafeAreaView>
@@ -139,5 +172,10 @@ const styles = StyleSheet.create({
     cardHeaderText: {
         fontWeight: 'bold',
         fontSize: 20,
+        alignSelf: 'center',
+    },
+    cardContent: {
+        padding: 10,
+        flexWrap: 'wrap',
     }
 });
