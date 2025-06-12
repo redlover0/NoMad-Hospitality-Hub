@@ -1,11 +1,13 @@
-// Home.js (your original code, with the addition of export default)
 import {Dimensions, Image, Pressable, ScrollView, Text, TouchableOpacity, View, StyleSheet} from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react"; // Added useState
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Ionicons} from "@expo/vector-icons";
 
-import {Carousel, Spacings} from "react-native-ui-lib";
-import {useRouter} from "expo-router";
+import {Carousel} from "react-native-ui-lib"; // Removed Spacings as it's not used
+import {useRouter} from "expo-router"; // Keep if you use useRouter elsewhere, otherwise can be removed
+
+import hotelDataFinder from "./api/hotelDataFinder";
+
 
 const INITIAL_PAGE = 0; // Keeping it at 0 to start with the first image
 const IMAGES = [
@@ -16,7 +18,41 @@ const IMAGES = [
 
 const {width} = Dimensions.get('window'); // Only need width for calculations
 
-export default function Home({navigation}) { // Make sure it's exported as default
+export default function Home({navigation}) {
+    // State to hold user information and room details
+    const [userInfo, setUserInfo] = useState({});
+    const [roomDetails, setRoomDetails] = useState({});
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await hotelDataFinder.get(`/`)
+                console.log("Response status:", response.status)
+                console.log("Response data:", response.data.rows)
+                if (response.status !== 200) {
+                    console.log("Error status:", response.status)
+                } else {
+                    console.log("Success! Data received:", response.data.rows)
+                    if (response.data.rows && response.data.rows.length > 0) {
+                        const userData = response.data.rows[0]; // Assuming the first item is the relevant user data
+                        setUserInfo({
+                            first_name: userData.first_name,
+                            last_name: userData.last_name
+                        });
+                        setRoomDetails({
+                            floor_number: userData.floor_number,
+                            room_type: userData.room_type
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error("API call failed:", error)
+                console.log("Error details:", error.response?.data)
+            }
+        }
+        fetchData();
+    }, []); // Empty dependency array means this effect runs once after the initial render
+
     const onclick = (buttonName) => {
         console.log(`Clicked ${buttonName}`);
     }
@@ -34,8 +70,12 @@ export default function Home({navigation}) { // Make sure it's exported as defau
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 <View style={styles.headerContainer}>
                     <View>
-                        <Text style={styles.Header}>Welcome, Dhamari</Text>
-                        <Text style={styles.roomInfo}>Floor 6 - Suite Royal Best</Text>
+                        <Text style={styles.Header}>
+                            Welcome, {userInfo.first_name ? userInfo.first_name  : 'Guest'}
+                        </Text>
+                        <Text style={styles.roomInfo}>
+                            {roomDetails.floor_number ? `Floor ${roomDetails.floor_number} - ${roomDetails.room_type}` : 'Loading room info...'}
+                        </Text>
                     </View>
                     <TouchableOpacity style={{padding: 10}} onPress={() => aboutUsNavigate()} >
                         <Ionicons name="menu" size={30} color="black" />
