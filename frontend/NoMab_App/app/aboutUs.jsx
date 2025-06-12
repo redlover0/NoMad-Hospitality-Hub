@@ -1,8 +1,10 @@
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native'
 import React from 'react'
 import {Ionicons} from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useNavigation} from "expo-router";
+import { StatusBar } from 'expo-status-bar';
+
 
 
 export default function AboutUs() {
@@ -11,31 +13,23 @@ export default function AboutUs() {
         Navigation.goBack();
     }
     return (
+        <ScrollView style={styles.scrollViewContent} >
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.headerContainer}>
-                {/* Back Button */}
-                <TouchableOpacity
-                    style={styles.backButton}
-                    onPress={backNavigate}
-                >
-                    <Ionicons name="arrow-back-outline" size={30} color="black" />
+                <TouchableOpacity style={styles.backButton} onPress={backNavigate}>
+                    <Ionicons name="arrow-back" size={24} color="#333" />
                 </TouchableOpacity>
-
-                {/* Header Title (Centered) */}
                 <View style={styles.headerTitleWrapper}>
-                    <Text style={styles.headerTitle}>About Us</Text>
+                    <Text style={styles.headerTitle}>House Keeping</Text>
                 </View>
-
-                {/* Placeholder for right side (to push title to center) */}
                 <View style={styles.rightPlaceholder} />
             </View>
 
-            {/* Main content of your About Us page */}
-            <View style={styles.content}>
-                <Text>This is the main content of the About Us page.</Text>
-                {/* ... other About Us content ... */}
-            </View>
+            {/*<View style={styles.content}>*/}
+            {/*    <Text>This is the main content of the About Us page.</Text>*/}
+            {/*</View>*/}
         </SafeAreaView>
+        </ScrollView>
     )
 }
 
@@ -67,6 +61,15 @@ const styles = StyleSheet.create({
     },
     servicesContainer: {
         flex: 1,
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#000',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    text: {
+        color: '#fff',
     },
     quickService: {
         paddingBottom: 10,
@@ -111,9 +114,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     headerTitle: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: 'black',
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#333',
     },
     rightPlaceholder: {
         width: 30 + (5 * 2), // Size of icon + padding on both sides of backButton
@@ -124,4 +127,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+
 });

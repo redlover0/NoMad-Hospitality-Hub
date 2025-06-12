@@ -1,135 +1,169 @@
-import {View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput, Alert} from 'react-native'
 import {Ionicons} from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useNavigation} from "expo-router";
 import {MultipleSelectList} from 'react-native-dropdown-select-list'
-
 import {useState} from 'react';
 
 const serviceTypeData = [
     {key: '1', value: 'Room Cleaning'},
     {key: '2', value: 'Fresh Towels'},
     {key: '3', value: 'Extra Pillows'},
-    {key: '4', value: 'Maintenance Issue'}
+    {key: '4', value: 'Maintenance Issue'},
+    {key: '5', value: 'Mini Bar Refill'},
+    {key: '6', value: 'Bathroom Supplies'},
 ];
 
 const timeData = [
     {key: '1', value: 'Now'},
     {key: '2', value: 'Within 1 hour'},
     {key: '3', value: 'This afternoon'},
-    {key: '4', value: 'Tomorrow morning'}
+    {key: '4', value: 'Tomorrow morning'},
+    {key: '5', value: 'Tomorrow afternoon'},
 ];
 
 export default function AboutUs() {
-    const [serviceType, setServiceType] = useState('');
+    const [serviceType, setServiceType] = useState([]);
     const [preferredTime, setPreferredTime] = useState('');
     const [specialInstructions, setSpecialInstructions] = useState('');
     const [roomAccess, setRoomAccess] = useState('');
     const Navigation = useNavigation();
+
     const backNavigate = () => {
         Navigation.goBack();
     }
+
+    const handleSubmit = () => {
+        if (!serviceType || !preferredTime || !roomAccess) {
+            Alert.alert('Missing Information', 'Please fill in all required fields.');
+            return;
+        }
+
+        Alert.alert(
+            'Request Submitted',
+            'Your housekeeping request has been submitted. Linda have been notified.',
+            [{ text: 'OK', onPress: () => Navigation.goBack() }]
+        );
+    }
+
     return (
-        <ScrollView>
-            <SafeAreaView style={styles.safeArea}>
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.headerContainer}>
-                    {/* Back Button */}
-                    <TouchableOpacity
-                        style={styles.backButton}
-                        onPress={backNavigate}
-                    >
-                        <Ionicons name="arrow-back-outline" size={30} color="black"/>
+                    <TouchableOpacity style={styles.backButton} onPress={backNavigate}>
+                        <Ionicons name="arrow-back" size={24} color="#333" />
                     </TouchableOpacity>
                     <View style={styles.headerTitleWrapper}>
                         <Text style={styles.headerTitle}>House Keeping</Text>
                     </View>
-                    <View style={styles.rightPlaceholder}/>
+                    <View style={styles.rightPlaceholder} />
                 </View>
-                <View style={[styles.cardContainer, {height: 400}]}>
+                <View style={styles.cardContainer}>
                     <View style={styles.cardHeaderContainer}>
-                        <Ionicons name="information-circle-outline" size={40}></Ionicons>
+                        <View style={styles.iconContainer}>
+                            <Ionicons name="person-circle" size={50} color="#4A90E2" />
+                        </View>
+                        <View style={styles.housekeeperInfo}>
+                            <Text style={styles.cardHeaderText}>Your Assigned HouseKeeper is: Linda</Text>
+                            <Text style={styles.statusText}>Currently Available</Text>                        </View>
                     </View>
-                    <View>
-                        <Text style={styles.cardHeaderText}>
-                            Your Assigned agent is: Linda
-                        </Text>
-                        <Text style={{padding: 10, backgroundColor: 'white', borderRadius: 8, marginTop: 10}}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Praesent euismod, tortor eu tincidunt efficitur,
-                        </Text>
+                    <View style={styles.statusContainer}>
+                        <Ionicons name="call" size={20} color="#4A90E2"
+                                  style={[styles.iconContainer, {marginLeft: 15, marginRight: 30}]}/>
+                        <Text>+1 234 567 8901</Text>
                     </View>
-                    <View style={styles.cardPlaceholder}>
-                        <Text>
+                </View>
 
+                <View style={styles.cardContainer}>
+                    <Text style={styles.Header}>Service Request</Text>
+
+                    <View style={styles.cardContent}>
+                        <Text style={styles.labelText}>
+                            Service Type <Text style={styles.required}>*</Text>
                         </Text>
+                        <MultipleSelectList
+                            setSelected={setServiceType}
+                            data={serviceTypeData}
+                            save="value"
+                            placeholder="Select services needed"
+                            searchPlaceholder="Search services..."
+                            boxStyles={styles.dropdownBox}
+                            dropdownStyles={styles.dropdown}
+                            badgeStyles={styles.badge}
+                            badgeTextStyles={styles.badgeText}
+                            checkBoxStyles={styles.checkbox}
+                            labelStyles={styles.dropdownLabel}
+                        />
                     </View>
-                    <View style={{padding: 10, backgroundColor: 'white', borderRadius: 8}}>
-                        <View>
-                            <Text style={{fontWeight: 'bold', fontSize: 18, paddingRight: 50, paddingBottom: 10, alignSelf: 'flex-start'}}>
-                                Service Type:
+
+                    <View style={styles.cardContent}>
+                        <Text style={styles.labelText}>
+                            Preferred Time <Text style={styles.required}>*</Text>
+                        </Text>
+                        <MultipleSelectList
+                            setSelected={setPreferredTime}
+                            data={timeData}
+                            save="value"
+                            placeholder="When would you like service?"
+                            searchPlaceholder="Search time slots..."
+                            boxStyles={styles.dropdownBox}
+                            dropdownStyles={styles.dropdown}
+                            labelStyles={styles.dropdownLabel}
+                            maxHeight={200}
+                        />
+                    </View>
+                    <View style={styles.cardContent}>
+                        <Text style={styles.labelText}>
+                            Room Access Time <Text style={styles.required}>*</Text>
+                        </Text>
+                        <MultipleSelectList
+                            setSelected={setRoomAccess}
+                            data={timeData}
+                            save="value"
+                            placeholder="When can we access your room?"
+                            searchPlaceholder="Search access times..."
+                            boxStyles={styles.dropdownBox}
+                            dropdownStyles={styles.dropdown}
+                            labelStyles={styles.dropdownLabel}
+                            maxHeight={200}
+                        />
+                    </View>
+                    <View style={styles.cardContent}>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <Text style={styles.labelText}>Special Instructions</Text>
+                            <Text style={styles.characterCount}>
+                                {specialInstructions.length}/500
                             </Text>
                         </View>
-                        <View style={{padding: 10}}>
-                            <Text style={styles.labelText}>Service Type:</Text>
-                            <MultipleSelectList
-                                setSelected={setServiceType}
-                                data={serviceTypeData}
-                                save="value"
-                                boxStyles={{marginTop: 5}}
-                                placeholder="Select Service Type"
-                            />
-                        </View>
-
-                        <View style={{padding: 10}}>
-                            <Text style={styles.labelText}>Preferred Time:</Text>
-                            <MultipleSelectList
-                                setSelected={setPreferredTime}
-                                data={timeData}
-                                save="value"
-                                boxStyles={{marginTop: 5}}
-                                placeholder="Select Preferred Time"
-                            />
-                        </View>
-
-                        <View style={{padding: 10}}>
-                            <Text style={styles.labelText}>Special Instructions:</Text>
-                            <TextInput
-                                style={styles.textInput}
-                                multiline
-                                numberOfLines={3}
-                                onChangeText={setSpecialInstructions}
-                                value={specialInstructions}
-                                placeholder="Enter any special instructions"
-                            />
-                        </View>
-
-                        <View style={{padding: 10}}>
-                            <Text style={styles.labelText}>Room Access Time:</Text>
-                            <MultipleSelectList
-                                setSelected={setRoomAccess}
-                                data={timeData}
-                                save="value"
-                                boxStyles={{marginTop: 5}}
-                                placeholder="Select Room Access Time"
-                            />
-                        </View>
+                        <TextInput
+                            style={styles.textInput}
+                            multiline
+                            numberOfLines={4}
+                            onChangeText={setSpecialInstructions}
+                            value={specialInstructions}
+                            placeholder="Any specific requests or instructions"
+                            placeholderTextColor="#999"
+                            textAlignVertical="top"
+                        />
                     </View>
+                    <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+                        <Ionicons name="checkmark-circle" size={20} color="white" style={styles.buttonIcon} />
+                        <Text style={styles.buttonText}>Submit Request</Text>
+                    </TouchableOpacity>
                 </View>
-            </SafeAreaView>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    scrollViewContent: {
-        flexGrow: 1,
-        paddingHorizontal: 20,
-        paddingTop: 20,
-    },
+
     Header: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginTop: 10,
+        fontSize: 20,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 20,
+        paddingHorizontal: 10,
     },
     roomInfo: {
         fontSize: 20,
@@ -160,44 +194,52 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     buttonText: {
-        marginTop: 8,
-        color: '#003366',
+        color: 'white',
         fontSize: 16,
-        fontWeight: '500',
+        fontWeight: '600',
     },
     buttomPictureContainer: {
+        flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 20,
-        paddingBottom: 20,
+        justifyContent: 'center',
+        marginTop: 16,
+        paddingTop: 16,
+        borderTopWidth: 1,
+        borderTopColor: '#E5E5E5',
+        paddingHorizontal: 10,
     },
     safeArea: {
         flex: 1,
-        backgroundColor: '#F2F2F2', // Match your app's background
+        backgroundColor: '#F8F9FA',
     },
     headerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: 10,
-        height: 60,
-        // backgroundColor: 'white',
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        backgroundColor: 'white',
         borderBottomWidth: 1,
-        borderBottomColor: '#e0e0e0', // creates a little shadow
+        borderBottomColor: '#E5E5E5',
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
     },
     backButton: {
-        padding: 5, // so its easier for people to press
+        padding: 8,
+        borderRadius: 20,
     },
     headerTitleWrapper: {
         flex: 1,
         alignItems: 'center',
     },
     headerTitle: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: 'black',
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#333',
     },
     rightPlaceholder: {
-        width: 30 + (5 * 2), // Size of icon + padding on both sides of backButton
+        width: 40,
     },
     content: {
         flex: 1,
@@ -207,41 +249,46 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
         backgroundColor: 'white',
-        borderRadius: 8,
-        width: '90%',
-        height: 650,
-        marginTop: 20,
-        alignSelf: 'center',
-        padding: 10,
+        borderRadius: 12,
+        marginHorizontal: 16,
+        marginTop: 16,
+        padding: 16,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
     },
     labelText: {
-        fontWeight: 'bold',
         fontSize: 16,
-        marginBottom: 5,
+        fontWeight: '500',
+        color: '#333',
+        marginBottom: 8,
     },
     textInput: {
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#E0E0E0',
         borderRadius: 8,
-        padding: 10,
-        marginTop: 5,
+        paddingHorizontal: 12,
+        paddingVertical: 12,
+        fontSize: 14,
+        backgroundColor: '#FAFAFA',
+        minHeight: 100,
         textAlignVertical: 'top',
     },
     cardHeaderContainer: {
-        alignSelf: 'center',
-        paddingTop: 15,
         flexDirection: 'row',
-        // borderBottomColor: '#e0e0e0',
-        // backgroundColor: '#e0e0e0',
+        alignItems: 'center',
+        marginBottom: 12,
     },
     cardHeaderText: {
-        fontWeight: 'bold',
-        fontSize: 20,
-        alignSelf: 'center',
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 2,
     },
     cardContent: {
-        padding: 10,
-        flexWrap: 'wrap',
+        marginBottom: 20,
     },
     cardPlaceholder: {
         height: 30,
@@ -249,5 +296,92 @@ const styles = StyleSheet.create({
         margin: 10,
         alignSelf: 'center',
         backgroundColor: '#F2F2F2'
-    }
+    },
+    iconContainer: {
+        marginRight: 12,
+    },
+    housekeeperInfo: {
+        flex: 1,
+    },
+    housekeeperDetails: {
+        fontSize: 14,
+        color: '#666',
+    },
+    statusContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    statusText: {
+        fontSize: 14,
+        color: '#4CAF50',
+        fontWeight: '500',
+    },
+    required: {
+        color: '#FF4444',
+    },
+    dropdownBox: {
+        borderWidth: 1,
+        borderColor: '#E0E0E0',
+        borderRadius: 8,
+        paddingHorizontal: 12,
+        paddingVertical: 12,
+        backgroundColor: '#FAFAFA',
+    },
+    dropdown: {
+        borderWidth: 1,
+        borderColor: '#E0E0E0',
+        borderRadius: 8,
+        backgroundColor: 'white',
+    },
+    dropdownLabel: {
+        fontSize: 14,
+        color: '#333',
+    },
+    badge: {
+        backgroundColor: '#4A90E2',
+        borderRadius: 6,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        marginRight: 6,
+        marginBottom: 6,
+    },
+    badgeText: {
+        color: 'white',
+        fontSize: 12,
+        fontWeight: '500',
+    },
+    checkbox: {
+        borderWidth: 1,
+        borderColor: '#4A90E2',
+    },
+    characterCount: {
+        fontSize: 12,
+        color: '#999',
+        textAlign: 'right',
+        marginTop: 4,
+    },
+    submitButton: {
+        backgroundColor: '#4A90E2',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 16,
+        borderRadius: 8,
+        marginTop: 8,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+        marginHorizontal: 10,
+    },
+    buttonIcon: {
+        marginRight: 8,
+    },
+    contactText: {
+        fontSize: 14,
+        color: '#666',
+        marginLeft: 8,
+        textAlign: 'center',
+    },
 });

@@ -33,9 +33,9 @@ export default function Home({navigation}) {
                     console.log("Error status:", response.status)
                 } else {
                     console.log("Success! Data received:", response.data.rows)
-                    if (response.data.rows && response.data.rows.length > 0) {
-                        const userData = response.data.rows[0]; // Assuming the first item is the relevant user data
-                        setUserInfo({
+                    if ( response.data.rows.length > 0) {
+                        const userData = response.data.rows[0];
+                        setUserInfo({  //
                             first_name: userData.first_name,
                             last_name: userData.last_name
                         });
@@ -51,7 +51,8 @@ export default function Home({navigation}) {
             }
         }
         fetchData();
-    }, []); // Empty dependency array means this effect runs once after the initial render
+    }, []);
+
 
     const onclick = (buttonName) => {
         console.log(`Clicked ${buttonName}`);
