@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, StyleSheet, ScrollView} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput} from 'react-native'
 import {Ionicons} from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useNavigation} from "expo-router";
@@ -6,18 +6,25 @@ import {MultipleSelectList} from 'react-native-dropdown-select-list'
 
 import {useState} from 'react';
 
-const data = [
-    {key: '1', value: 'Mobiles', disabled: false},
-    {key: '2', value: 'Appliances'},
-    {key: '3', value: 'Cameras'},
-    {key: '4', value: 'Computers', disabled: false},
-    {key: '5', value: 'Vegetables'},
-    {key: '6', value: 'Diary Products'},
-    {key: '7', value: 'Drinks'},
-]
+const serviceTypeData = [
+    {key: '1', value: 'Room Cleaning'},
+    {key: '2', value: 'Fresh Towels'},
+    {key: '3', value: 'Extra Pillows'},
+    {key: '4', value: 'Maintenance Issue'}
+];
+
+const timeData = [
+    {key: '1', value: 'Now'},
+    {key: '2', value: 'Within 1 hour'},
+    {key: '3', value: 'This afternoon'},
+    {key: '4', value: 'Tomorrow morning'}
+];
 
 export default function AboutUs() {
-    const [selected, setSelected] = useState([]);
+    const [serviceType, setServiceType] = useState('');
+    const [preferredTime, setPreferredTime] = useState('');
+    const [specialInstructions, setSpecialInstructions] = useState('');
+    const [roomAccess, setRoomAccess] = useState('');
     const Navigation = useNavigation();
     const backNavigate = () => {
         Navigation.goBack();
@@ -62,36 +69,50 @@ export default function AboutUs() {
                                 Service Type:
                             </Text>
                         </View>
-                        <View>
-                        <MultipleSelectList
-                            setSelected={(val) => setSelected(val)}
-                            data={data}
-                            save="value"
-                            onSelect={() => console.log(selected)}
-                            label="Categories"
-                            placeholder="Select Room Service Categories"
-                            searchPlaceholder={"Search Bar"}
-                        />
+                        <View style={{padding: 10}}>
+                            <Text style={styles.labelText}>Service Type:</Text>
+                            <MultipleSelectList
+                                setSelected={setServiceType}
+                                data={serviceTypeData}
+                                save="value"
+                                boxStyles={{marginTop: 5}}
+                                placeholder="Select Service Type"
+                            />
                         </View>
-                        <View style={styles.cardPlaceholder}>
-                            <Text>
 
-                            </Text>
+                        <View style={{padding: 10}}>
+                            <Text style={styles.labelText}>Preferred Time:</Text>
+                            <MultipleSelectList
+                                setSelected={setPreferredTime}
+                                data={timeData}
+                                save="value"
+                                boxStyles={{marginTop: 5}}
+                                placeholder="Select Preferred Time"
+                            />
                         </View>
-                        <View style={{padding: 10, backgroundColor: 'white', borderRadius: 8}}>
-                            <Text style={{fontWeight: 'bold', fontSize: 18, paddingRight: 50, paddingBottom: 10, alignSelf: 'flex-start'}}>
-                                Service Type:
-                            </Text>
+
+                        <View style={{padding: 10}}>
+                            <Text style={styles.labelText}>Special Instructions:</Text>
+                            <TextInput
+                                style={styles.textInput}
+                                multiline
+                                numberOfLines={3}
+                                onChangeText={setSpecialInstructions}
+                                value={specialInstructions}
+                                placeholder="Enter any special instructions"
+                            />
                         </View>
-                        <MultipleSelectList
-                            setSelected={(val) => setSelected(val)}
-                            data={data}
-                            save="value"
-                            onSelect={() => console.log(selected)}
-                            label="Categories"
-                            placeholder="Select Room Service Categories"
-                            searchPlaceholder={"Search Bar"}
-                        />
+
+                        <View style={{padding: 10}}>
+                            <Text style={styles.labelText}>Room Access Time:</Text>
+                            <MultipleSelectList
+                                setSelected={setRoomAccess}
+                                data={timeData}
+                                save="value"
+                                boxStyles={{marginTop: 5}}
+                                placeholder="Select Room Access Time"
+                            />
+                        </View>
                     </View>
                 </View>
             </SafeAreaView>
@@ -188,9 +209,23 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 8,
         width: '90%',
-        height: 150,
+        height: 650,
         marginTop: 20,
         alignSelf: 'center',
+        padding: 10,
+    },
+    labelText: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        marginBottom: 5,
+    },
+    textInput: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        padding: 10,
+        marginTop: 5,
+        textAlignVertical: 'top',
     },
     cardHeaderContainer: {
         alignSelf: 'center',
