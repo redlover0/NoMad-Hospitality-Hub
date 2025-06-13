@@ -20,14 +20,10 @@ export default function AboutUs() {
                     <Ionicons name="arrow-back" size={24} color="#333" />
                 </TouchableOpacity>
                 <View style={styles.headerTitleWrapper}>
-                    <Text style={styles.headerTitle}>House Keeping</Text>
+                    <Text style={styles.headerTitle}>About Us</Text>
                 </View>
                 <View style={styles.rightPlaceholder} />
             </View>
-
-            {/*<View style={styles.content}>*/}
-            {/*    <Text>This is the main content of the About Us page.</Text>*/}
-            {/*</View>*/}
         </SafeAreaView>
         </ScrollView>
     )
