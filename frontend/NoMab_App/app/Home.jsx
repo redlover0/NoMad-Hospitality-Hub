@@ -8,7 +8,6 @@ import {useRouter} from "expo-router"; // Keep if you use useRouter elsewhere, o
 
 import hotelDataFinder from "./api/hotelDataFinder";
 
-
 const INITIAL_PAGE = 0; // Keeping it at 0 to start with the first image
 const IMAGES = [
     'https://michigancentral.com/wp-content/uploads/2025/06/2024-TheStationHotel-18thFloor-Stephanie-Rhoades-Hume_3-scaled.jpg',
@@ -66,6 +65,10 @@ export default function Home({navigation}) {
         navigation.navigate('aboutUs');
     }
 
+    const roomMoodNavigate = () => {
+        navigation.navigate('roomMood');
+    }
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -104,12 +107,12 @@ export default function Home({navigation}) {
                     </Text>
                     <View style={styles.buttonGrid}>
                         <TouchableOpacity style={styles.buttonGridItem} onPress={() => roomServiceNavigate()}>
-                            <Ionicons name="restaurant-outline" size={24} color="#003366"/>
-                            <Text style={styles.buttonText}>Room Service</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => onclick('Housekeeping')}>
                             <Ionicons name="bed-outline" size={24} color="#003366"/>
                             <Text style={styles.buttonText}>Housekeeping</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => roomMoodNavigate()}>
+                            <Ionicons name="thermometer-outline" size={24} color="#003366"/>
+                            <Text style={styles.buttonText}>Room Mood</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonGridItem} onPress={() => onclick('Concierge')}>
                             <Ionicons name="information-circle-outline" size={24} color="#003366"/>
