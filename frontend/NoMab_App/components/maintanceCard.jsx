@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import React from 'react'
 import {Ionicons} from "@expo/vector-icons";
 import {useNavigation} from "expo-router";
+import ForeverLoading from "./foreverLoading";
 
 
 
@@ -18,10 +19,11 @@ export default function MaintanceCard({
   return (
       <View style={styles.backGround}>
     <View style={styles.cardContainer}>
-        <Ionicons name={icon} size={50} color="#4A90E2" style={ {marginTop: 10, alignSelf: 'center'}}/>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.content}>{content}</Text>
-        <View style={styles.placeHolder}></View>
+        <View style={styles.placeHolder}>
+            <ForeverLoading/>
+        </View>
         <View>
 
             <View>

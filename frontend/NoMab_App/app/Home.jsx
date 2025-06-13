@@ -2,6 +2,7 @@ import {Dimensions, Image, Pressable, ScrollView, Text, TouchableOpacity, View, 
 import React, { useEffect, useState } from "react"; // Added useState
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Ionicons} from "@expo/vector-icons";
+import {format} from "date-fns";
 
 import {Carousel} from "react-native-ui-lib"; // Removed Spacings as it's not used
 import {useRouter} from "expo-router"; // Keep if you use useRouter elsewhere, otherwise can be removed
@@ -21,6 +22,7 @@ export default function Home({navigation}) {
     // State to hold user information and room details
     const [userInfo, setUserInfo] = useState({});
     const [roomDetails, setRoomDetails] = useState({});
+    const [date, setDate] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,6 +44,9 @@ export default function Home({navigation}) {
                             floor_number: userData.floor_number,
                             room_type: userData.room_type
                         });
+                        setDate({
+                            check_out_datetime: userData.check_out_datetime,
+                        })
                     }
                 }
             } catch (error) {
@@ -69,8 +74,13 @@ export default function Home({navigation}) {
         navigation.navigate('roomMood');
     }
 
+    const checkOutDate = (userData) => {
+        const checkOutDate = userData.check_out_datetime;
+        return format(new Date(checkOutDate), "MMMM d, yyyy 'at' h:mm a");
+    }
+
     return (
-        <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea}>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 <View style={styles.headerContainer}>
                     <View>
@@ -78,7 +88,10 @@ export default function Home({navigation}) {
                             Welcome, {userInfo.first_name ? userInfo.first_name  : 'Guest'}
                         </Text>
                         <Text style={styles.roomInfo}>
-                            {roomDetails.floor_number ? `Floor ${roomDetails.floor_number} - ${roomDetails.room_type}` : 'Loading room info...'}
+                            {roomDetails.floor_number ? `Floor ${roomDetails.floor_number} - ${roomDetails.room_type}` : 'room info loading...'}
+                        </Text>
+                        <Text style={styles.checkOutDate}>
+                            {date ? ` Check Out : ${checkOutDate(date)}` : 'Check Out Not ready: loading...'}
                         </Text>
                     </View>
                     <TouchableOpacity style={{padding: 10}} onPress={() => aboutUsNavigate()} >
@@ -212,5 +225,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
         paddingBottom: 20,
+    },
+    checkOutDate: {
+        fontSize: 12,
+        color: '#999',
+        // textAlign: 'right',
+        marginTop: 4,
+        fontWeight: 'bold',
     }
 });
