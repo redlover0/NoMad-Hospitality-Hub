@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import React from 'react'
 import {Ionicons} from "@expo/vector-icons";
+import {useNavigation} from "expo-router";
+
 
 
 export default function MaintanceCard({
@@ -9,15 +11,27 @@ export default function MaintanceCard({
     onPress,
     icon,
                                       }) {
+    const navigation = useNavigation();
+    const backNavigate = () => {
+        navigation.goBack();
+    }
   return (
       <View style={styles.backGround}>
     <View style={styles.cardContainer}>
         <Ionicons name={icon} size={50} color="#4A90E2" style={ {marginTop: 10, alignSelf: 'center'}}/>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.content}>{content}</Text>
-        <TouchableOpacity onPress={onPress}>
-            <Button title="Click Me" />
+        <View style={styles.placeHolder}></View>
+        <View>
+
+            <View>
+        <TouchableOpacity onPress={onPress} style={styles.buttonContainer} >
+            <Text style={styles.button}>
+                Go Back
+            </Text>
         </TouchableOpacity>
+            </View>
+        </View>
     </View>
       </View>
   )
@@ -47,6 +61,7 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     content: {
+        paddingTop: 10,
         fontSize: 14,
         color: '#666',
         alignSelf: 'center',
@@ -55,4 +70,30 @@ const styles = StyleSheet.create({
         width: 300,
         textAlign: 'center',
     },
+    placeHolder: {
+        height: 100,
+        width: 200,
+        flex: 1,
+        // backgroundColor: 'red',
+        alignSelf: 'center',
+        // borderRadius: 100,
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    button: {
+        // backgroundColor: '#4A90E2',
+        // marginTop: 10,
+        color: 'white',
+        fontSize: 25,
+        fontWeight: '600',
+    },
+    buttonContainer: {
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        padding: 10,
+        backgroundColor: '#4A90E2',
+        width: 200,
+    }
 })
