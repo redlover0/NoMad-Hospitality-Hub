@@ -7,7 +7,6 @@ import { useRouter } from 'expo-router';
 const { width, height } = Dimensions.get('window');
 
 const Loading = ({ navigation }) => {
-    const router = useRouter();
     useEffect(() => {
         const timer = setTimeout(() => {
             navigation.replace('home');
