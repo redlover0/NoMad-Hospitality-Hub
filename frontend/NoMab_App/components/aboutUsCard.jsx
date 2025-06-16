@@ -5,10 +5,20 @@ import {Ionicons} from "@expo/vector-icons";
 export default function AboutUsCard({
                                         name,
                                         bio,
-                                        icon,
+                                        icon="person-circle-outline",
                                         linkin,
     github,
                                     }) {
+    const handleLinkPress = async (url) => {
+        if (url) {
+            try {
+                await Linking.openURL(url)
+            } catch (error) {
+                console.error('Failed to open URL:', error)
+            }
+        }
+    }
+
   return (
       <View style={styles.cardContainer}>
           <View style={styles.cardHeaderContainer}>
@@ -25,13 +35,13 @@ export default function AboutUsCard({
               {/*<Text>+1 234 567 8901</Text>*/}
           </View>
           <View style={{flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-between', marginTop: 10,}}>
-              <TouchableOpacity  onPress={() => linkin}>
+              <TouchableOpacity  onPress={() => handleLinkPress}>
                   <Ionicons name="logo-linkedin" size={35} color="#4A90E2" style={{marginLeft: 15, marginRight: 30}}/>
               </TouchableOpacity>
               <View style={{width: 40}}>
 
               </View>
-              <TouchableOpacity  >
+              <TouchableOpacity onPress={() => handleLinkPress} >
                   <Ionicons name="logo-github" size={35}  style={{marginLeft: 15, marginRight: 30}}/>
               </TouchableOpacity>
               {/*<Text style={{fontSize: 14, color: '#666'}}>LinkedIn</Text>*/}

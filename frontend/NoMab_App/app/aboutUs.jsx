@@ -27,7 +27,7 @@ export default function AboutUs() {
                 <View style={styles.rightPlaceholder} />
             </View>
             <View style={styles.content}>
-                <AboutUsCard name="Dhamari" bio="Love me" icon="person-circle-outline" github="https://github.com/Dhamari" linkedin="https://www.linkedin.com/in/dhamari-khan-2000/" />
+                <AboutUsCard name="Dhamari" bio="My name is Dhamari Trice-Hanson, and I care deeply about creating social change enabled by technology and entrepreneurship." github="https://github.com/Dhamari" linkedin="https://www.linkedin.com/in/dhamari-khan-2000/" />
             </View>
             <View>
                 <AboutUsCard name="Jordan" i bio="I'm a rising 12th grader at Cass Technical Highschool. I assisted in this project, alongside my college Dhamari. My interest stem around coding and computer science with my expertise in Roblox Lua Coding."/>

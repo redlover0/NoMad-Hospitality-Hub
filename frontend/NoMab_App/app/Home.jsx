@@ -62,16 +62,24 @@ export default function Home({navigation}) {
         console.log(`Clicked ${buttonName}`);
     }
 
-    const roomServiceNavigate = () => {
+    const navigateToRoomService = () => {
         navigation.navigate('room_service');
     }
 
-    const aboutUsNavigate = () => {
+    const navigateToAboutUs = () => {
         navigation.navigate('aboutUs');
     }
 
-    const roomMoodNavigate = () => {
+    const navigateToRoomMood = () => {
         navigation.navigate('roomMood');
+    }
+
+    const navigateToAmenities = () => {
+        navigation.navigate('amenities');
+    }
+
+    const navigateToConcierge = () => {
+        navigation.navigate('concierge');
     }
 
     const checkOutDate = (userData) => {
@@ -94,11 +102,15 @@ export default function Home({navigation}) {
                             {date ? ` Check Out : ${checkOutDate(date)}` : 'Check Out Not ready: loading...'}
                         </Text>
                     </View>
-                    <TouchableOpacity style={{padding: 10}} onPress={() => aboutUsNavigate()} >
+
+
+                    {/*About us Slide Bar Page*/}
+                    <TouchableOpacity style={{padding: 10}} onPress={() => navigateToAboutUs()} >
                         <Ionicons name="menu" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
 
+                {/*Advertisement Banner*/}
                 <Carousel
                     initialPage={INITIAL_PAGE}
                     containerStyle={styles.carouselContainer}
@@ -119,25 +131,32 @@ export default function Home({navigation}) {
                         Quick Services
                     </Text>
                     <View style={styles.buttonGrid}>
-                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => roomServiceNavigate()}>
+
+                        {/*Room Service Button*/}
+                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => navigateToRoomService()}>
                             <Ionicons name="bed-outline" size={24} color="#003366"/>
                             <Text style={styles.buttonText}>Housekeeping</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => roomMoodNavigate()}>
+
+                        {/*Room Mood Button*/}
+                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => navigateToRoomMood()}>
                             <Ionicons name="thermometer-outline" size={24} color="#003366"/>
                             <Text style={styles.buttonText}>Room Mood</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => onclick('Concierge')}>
+
+                        {/*Concierge Button*/}
+                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => navigateToConcierge()}>
                             <Ionicons name="information-circle-outline" size={24} color="#003366"/>
                             <Text style={styles.buttonText}>Concierge</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => onclick('Amenities')}>
+
+                        {/*Amenities Button*/}
+                        <TouchableOpacity style={styles.buttonGridItem} onPress={() => navigateToAmenities()}>
                             <Ionicons name="fitness-outline" size={24} color="#003366"/>
                             <Text style={styles.buttonText}>Amenities</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttomPictureContainer}>
-                        {/* Assuming you have this image in your assets folder */}
                         <Image
                             source={require('../assets/images/Group 5.svg')}
                             style={{width: 100, height: 100}}

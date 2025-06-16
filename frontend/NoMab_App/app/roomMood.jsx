@@ -17,7 +17,7 @@ export default function RoomMood() {
     <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
             <View>
-            <MaintanceCard title="Room Mood" onPress={backNavigate} content="This Page is currently under maintaince please check in later" icon="reload-outline">
+            <MaintanceCard title="Room Mood" onPress={backNavigate} content="The app will control your room's temperature and blinds remotely to create the perfect ambiance before you even arrive" >
             </MaintanceCard>
             </View>
         </View>

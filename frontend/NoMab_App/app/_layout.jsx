@@ -7,6 +7,8 @@ import TabLayout from "./(tabs)/index";
 import Room from "./room_service";
 import AboutUs from "./aboutUs";
 import RoomMood from "./roomMood";
+import amenitiesPage from "./amenitiesPage";
+import conciegrePage from "./conciegrePage";
 
 export default function RootLayout() {
     const Stack = createNativeStackNavigator();
@@ -29,6 +31,12 @@ export default function RootLayout() {
 
             <Stack.Screen name="roomMood"
                           component={RoomMood} options={{headerShown: false, title: 'Room Mood', animation: 'slide_from_bottom', }}/>
+
+            <Stack.Screen name="amenities"
+                          component={amenitiesPage} options={{headerShown: false, title: 'Room Mood', animation: 'slide_from_bottom', }}/>
+
+            <Stack.Screen name="concierge"
+                          component={conciegrePage} options={{headerShown: false, title: 'concierge', animation: 'slide_from_bottom', }}/>
         </Stack.Navigator>
     );
 }
