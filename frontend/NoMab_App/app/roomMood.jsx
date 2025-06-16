@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#F8F8F8',
     },
     container: {
-        flex: 1,               // This View expands to fill the SafeAreaView
-        justifyContent: 'center', // Centers children vertically
-        alignItems: 'center',    // Centers children horizontally
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });

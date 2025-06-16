@@ -1,9 +1,24 @@
-import {View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput, Alert} from 'react-native'
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    StyleSheet,
+    ScrollView,
+    TextInput,
+    Alert,
+    LogBox,
+    KeyboardAvoidingView, // <-- Added KeyboardAvoidingView
+    Platform // <-- Added Platform for OS-specific behavior
+} from 'react-native'
 import {Ionicons} from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useNavigation} from "expo-router";
 import {MultipleSelectList} from 'react-native-dropdown-select-list'
 import {useState} from 'react';
+
+LogBox.ignoreLogs([
+    'Text strings must be rendered within a <Text> component'
+]);
 
 const serviceTypeData = [
     {key: '1', value: 'Room Cleaning'},
@@ -22,142 +37,170 @@ const timeData = [
     {key: '5', value: 'Tomorrow afternoon'},
 ];
 
-export default function AboutUs() {
-    const [serviceType, setServiceType] = useState([]);
+// Updated roomAccessData for practicality
+const roomAccessData = [
+    {key: '1', value: 'Please enter, I will not be in the room'},
+    {key: '2', value: 'Please knock, I will be in the room'},
+    {key: '3', value: 'Call me before entering (My number: +1 234 567 8901)'}, // You'd typically fetch user's number here
+    {key: '4', value: 'Come back later (Specify in Special Instructions)'},
+];
+
+export default function RoomService() {
+    const [serviceType, setServiceType] = useState('');
     const [preferredTime, setPreferredTime] = useState('');
     const [specialInstructions, setSpecialInstructions] = useState('');
     const [roomAccess, setRoomAccess] = useState('');
-    const Navigation = useNavigation();
+    const navigation = useNavigation();
 
     const backNavigate = () => {
-        Navigation.goBack();
+        navigation.goBack();
     }
 
     const handleSubmit = () => {
-        if (!serviceType || !preferredTime || !roomAccess) {
+        if (serviceType.length === 0 || preferredTime.length === 0 || roomAccess.length === 0) {
             Alert.alert('Missing Information', 'Please fill in all required fields.');
             return;
         }
 
         Alert.alert(
             'Request Submitted',
-            'Your housekeeping request has been submitted. Linda have been notified.',
-            [{ text: 'OK', onPress: () => Navigation.goBack() }]
+            'Your housekeeping request has been submitted. Linda has been notified.',
+            [{ text: 'OK', onPress: () => navigation.goBack() }]
         );
     }
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.headerContainer}>
-                    <TouchableOpacity style={styles.backButton} onPress={backNavigate}>
-                        <Ionicons name="arrow-back" size={24} color="#333" />
-                    </TouchableOpacity>
-                    <View style={styles.headerTitleWrapper}>
-                        <Text style={styles.headerTitle}>House Keeping</Text>
-                    </View>
-                    <View style={styles.rightPlaceholder} />
-                </View>
-                <View style={styles.cardContainer}>
-                    <View style={styles.cardHeaderContainer}>
-                        <View style={styles.iconContainer}>
-                            <Ionicons name="person-circle" size={50} color="#4A90E2" />
+            {/* KeyboardAvoidingView starts here */}
+            <KeyboardAvoidingView
+                style={{ flex: 1 }} // Essential to make KeyboardAvoidingView fill available space
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Use 'padding' for iOS, 'height' for Android
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0} // Adjust this offset for iOS if header covers input
+            >
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollViewContent} // <-- Added contentContainerStyle
+                >
+                    <View style={styles.headerContainer}>
+                        <TouchableOpacity style={styles.backButton} onPress={backNavigate}>
+                            <Ionicons name="arrow-back" size={24} color="#333" />
+                        </TouchableOpacity>
+                        <View style={styles.headerTitleWrapper}>
+                            <Text style={styles.headerTitle}>House Keeping</Text>
                         </View>
-                        <View style={styles.housekeeperInfo}>
-                            <Text style={styles.cardHeaderText}>Your Assigned HouseKeeper is: Linda</Text>
-                            <Text style={styles.statusText}>Currently Available</Text>                        </View>
-                    </View>
-                    <View style={styles.statusContainer}>
-                        <Ionicons name="call" size={20} color="#4A90E2"
-                                  style={[styles.iconContainer, {marginLeft: 15, marginRight: 30}]}/>
-                        <Text>+1 234 567 8901</Text>
-                    </View>
-                </View>
-
-                <View style={styles.cardContainer}>
-                    <Text style={styles.Header}>Service Request</Text>
-
-                    <View style={styles.cardContent}>
-                        <Text style={styles.labelText}>
-                            Service Type <Text style={styles.required}>*</Text>
-                        </Text>
-                        <MultipleSelectList
-                            setSelected={setServiceType}
-                            data={serviceTypeData}
-                            save="value"
-                            placeholder="Select services needed"
-                            searchPlaceholder="Search services..."
-                            boxStyles={styles.dropdownBox}
-                            dropdownStyles={styles.dropdown}
-                            badgeStyles={styles.badge}
-                            badgeTextStyles={styles.badgeText}
-                            checkBoxStyles={styles.checkbox}
-                            labelStyles={styles.dropdownLabel}
-                        />
+                        <View style={styles.rightPlaceholder} />
                     </View>
 
-                    <View style={styles.cardContent}>
-                        <Text style={styles.labelText}>
-                            Preferred Time <Text style={styles.required}>*</Text>
-                        </Text>
-                        <MultipleSelectList
-                            setSelected={setPreferredTime}
-                            data={timeData}
-                            save="value"
-                            placeholder="When would you like service?"
-                            searchPlaceholder="Search time slots..."
-                            boxStyles={styles.dropdownBox}
-                            dropdownStyles={styles.dropdown}
-                            labelStyles={styles.dropdownLabel}
-                            maxHeight={200}
-                        />
+                    <View style={styles.cardContainer}>
+                        <View style={styles.cardHeaderContainer}>
+                            <View style={styles.iconContainer}>
+                                <Ionicons name="person-circle" size={50} color="#4A90E2" />
+                            </View>
+                            <View style={styles.housekeeperInfo}>
+                                <Text style={styles.cardHeaderText}>Your Assigned HouseKeeper is: Linda</Text>
+                                <Text style={styles.statusText}>Currently Available</Text>
+                            </View>
+                        </View>
+                        <View style={styles.statusContainer}>
+                            <Ionicons name="call" size={20} color="#4A90E2"
+                                      style={[styles.iconContainer, {marginLeft: 15, marginRight: 30}]}/>
+                            <Text>+1 234 567 8901</Text>
+                        </View>
                     </View>
-                    <View style={styles.cardContent}>
-                        <Text style={styles.labelText}>
-                            Room Access Time <Text style={styles.required}>*</Text>
-                        </Text>
-                        <MultipleSelectList
-                            setSelected={setRoomAccess}
-                            data={timeData}
-                            save="value"
-                            placeholder="When can we access your room?"
-                            searchPlaceholder="Search access times..."
-                            boxStyles={styles.dropdownBox}
-                            dropdownStyles={styles.dropdown}
-                            labelStyles={styles.dropdownLabel}
-                            maxHeight={200}
-                        />
-                    </View>
-                    <View style={styles.cardContent}>
-                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text style={styles.labelText}>Special Instructions</Text>
-                            <Text style={styles.characterCount}>
-                                {specialInstructions.length}/500
+
+                    <View style={styles.cardContainer}>
+                        <Text style={styles.Header}>Service Request</Text>
+
+                        <View style={styles.cardContent}>
+                            <Text style={styles.labelText}>
+                                Service Type <Text style={styles.required}>*</Text>
                             </Text>
+                            <MultipleSelectList
+                                setSelected={setServiceType}
+                                data={serviceTypeData}
+                                save="value"
+                                placeholder="Select services needed"
+                                searchPlaceholder="Search services..."
+                                boxStyles={styles.dropdownBox}
+                                dropdownStyles={styles.dropdown}
+                                badgeStyles={styles.badge}
+                                badgeTextStyles={styles.badgeText}
+                                checkBoxStyles={styles.checkbox}
+                                labelStyles={styles.dropdownLabel}
+                            />
                         </View>
-                        <TextInput
-                            style={styles.textInput}
-                            multiline
-                            numberOfLines={4}
-                            onChangeText={setSpecialInstructions}
-                            value={specialInstructions}
-                            placeholder="Any specific requests or instructions"
-                            placeholderTextColor="#999"
-                            textAlignVertical="top"
-                        />
+
+                        {/* Preferred Time */}
+                        <View style={styles.cardContent}>
+                            <Text style={styles.labelText}>
+                                Preferred Time <Text style={styles.required}>*</Text>
+                            </Text>
+                            <MultipleSelectList
+                                setSelected={setPreferredTime}
+                                data={timeData}
+                                save="value"
+                                placeholder="When would you like service?"
+                                searchPlaceholder="Search time slots..."
+                                boxStyles={styles.dropdownBox}
+                                dropdownStyles={styles.dropdown}
+                                labelStyles={styles.dropdownLabel}
+                                maxHeight={200}
+                                maxSelect={1} // Enforce single selection
+                            />
+                        </View>
+
+                        {/* Room Access */}
+                        <View style={styles.cardContent}>
+                            <Text style={styles.labelText}>
+                                Room Access Instructions <Text style={styles.required}>*</Text>
+                            </Text>
+                            <MultipleSelectList
+                                setSelected={setRoomAccess}
+                                data={roomAccessData} // <-- Using the updated data
+                                save="value"
+                                placeholder="How should we access your room?"
+                                searchPlaceholder="Search access options..."
+                                boxStyles={styles.dropdownBox}
+                                dropdownStyles={styles.dropdown}
+                                labelStyles={styles.dropdownLabel}
+                                maxHeight={200}
+                                maxSelect={1}
+                            />
+                        </View>
+
+                        {/* Special Instructions */}
+                        <View style={styles.cardContent}>
+                            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <Text style={styles.labelText}>Special Instructions</Text>
+                                <Text style={styles.characterCount}>
+                                    {specialInstructions.length}/500
+                                </Text>
+                            </View>
+                            <TextInput
+                                style={styles.textInput}
+                                multiline
+                                numberOfLines={4}
+                                onChangeText={setSpecialInstructions}
+                                value={specialInstructions}
+                                placeholder="Any specific requests or instructions"
+                                placeholderTextColor="#999"
+                                textAlignVertical="top"
+                                maxLength={500}
+                            />
+                        </View>
+                        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+                            <Ionicons name="checkmark-circle" size={20} color="white" style={styles.buttonIcon} />
+                            <Text style={styles.buttonText}>Submit Request</Text>
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-                        <Ionicons name="checkmark-circle" size={20} color="white" style={styles.buttonIcon} />
-                        <Text style={styles.buttonText}>Submit Request</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </KeyboardAvoidingView>
+            {/* KeyboardAvoidingView ends here */}
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-
     Header: {
         fontSize: 20,
         fontWeight: '600',
@@ -224,6 +267,7 @@ const styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowRadius: 2,
+        elevation: 2, // For Android shadow
     },
     backButton: {
         padding: 8,
@@ -253,11 +297,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         marginTop: 16,
         padding: 16,
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        elevation: 2, // Android shadow
+        shadowColor: '#000', // iOS shadow
+        shadowOffset: { width: 0, height: 2 }, // iOS shadow
+        shadowOpacity: 0.1, // iOS shadow
+        shadowRadius: 4, // iOS shadow
     },
     labelText: {
         fontSize: 16,
@@ -368,11 +412,11 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         borderRadius: 8,
         marginTop: 8,
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
+        elevation: 2, // Android shadow
+        shadowColor: '#000', // iOS shadow
+        shadowOffset: { width: 0, height: 2 }, // iOS shadow
+        shadowOpacity: 0.15, // iOS shadow
+        shadowRadius: 4, // iOS shadow
         marginHorizontal: 10,
     },
     buttonIcon: {
@@ -383,5 +427,9 @@ const styles = StyleSheet.create({
         color: '#666',
         marginLeft: 8,
         textAlign: 'center',
+    },
+    scrollViewContent: {
+        flexGrow: 1, // Ensure the ScrollView content takes up all available space
+        paddingBottom: 20, // prevent content from being too close to the edge
     },
 });

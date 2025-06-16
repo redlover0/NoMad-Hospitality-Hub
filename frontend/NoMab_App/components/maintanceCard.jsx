@@ -1,101 +1,146 @@
-import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import {Ionicons} from "@expo/vector-icons";
-import {useNavigation} from "expo-router";
-import ForeverLoading from "./foreverLoading";
+import { useNavigation } from "expo-router"
+import ForeverLoading from "./foreverLoading"
 
+export default function MaintenanceCard({
+                                            title,
+                                            content,
+                                            onPress,
+                                            buttonText = "Go Back",
+                                            showLoading = true,
+                                        }) {
+    const navigation = useNavigation()
 
-
-export default function MaintanceCard({
-    title,
-    content,
-    onPress,
-    icon,
-                                      }) {
-    const navigation = useNavigation();
-    const backNavigate = () => {
-        navigation.goBack();
+    const handlePress = () => {
+        if (onPress) {
+            onPress()
+        } else {
+            navigation.goBack()
+        }
     }
-  return (
-      <View style={styles.backGround}>
-    <View style={styles.cardContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.content}>{content}</Text>
-        <View style={styles.placeHolder}>
-            <ForeverLoading/>
-        </View>
-        <View>
 
-            <View>
-        <TouchableOpacity onPress={onPress} style={styles.buttonContainer} >
-            <Text style={styles.button}>
-                Go Back
-            </Text>
-        </TouchableOpacity>
+    return (
+        <View style={styles.container}>
+            <View style={styles.card}>
+                {/*// Decorative top bar */}
+                <View style={styles.topBar} />
+
+                {/*// Header */}
+                <View style={styles.header}>
+                    <Text style={styles.title}>{title}</Text>
+                </View>
+
+                {/* Content */}
+                <Text style={styles.content}>{content}</Text>
+
+                {/*// Loading placeholder */}
+                {showLoading && (
+                    <View style={styles.loadingContainer}>
+                        <View style={styles.loadingWrapper}>
+                            <ForeverLoading />
+                        </View>
+                    </View>
+                )}
+
+                {/*// Back button */}
+                <TouchableOpacity
+                    onPress={handlePress}
+                    style={styles.button}
+                    activeOpacity={0.7}
+                >
+                    <Text style={styles.buttonText}>
+                        {buttonText}
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
-    </View>
-      </View>
-  )
+    )
 }
 
 const styles = StyleSheet.create({
-    backGround: {
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        backgroundColor: '#f8fafc',
     },
-    cardContainer: {
+    card: {
         backgroundColor: 'white',
-        borderRadius: 12,
-        marginHorizontal: 16,
-        height: 300,
-        marginTop: 16,
-        padding: 16,
-        width: 350,
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        borderRadius: 24,
+        width: '100%',
+        maxWidth: 380,
+        padding: 0,
+        overflow: 'hidden',
+        elevation: 8,
+        shadowColor: '#1e293b',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.12,
+        shadowRadius: 12,
+        alignItems: 'center',
+    },
+    topBar: {
+        width: '100%',
+        height: 6,
+        backgroundColor: '#4f46e5',
+        marginBottom: 24,
+    },
+    header: {
+        alignItems: 'center',
+        marginBottom: 20,
+        paddingHorizontal: 24,
     },
     title: {
-        alignSelf: 'center',
-        fontSize: 18,
-        fontWeight: '600',
-        color: '#333',
+        fontSize: 24,
+        fontWeight: '800',
+        color: '#1e293b',
+        textAlign: 'center',
+        letterSpacing: -0.5,
     },
     content: {
-        paddingTop: 10,
-        fontSize: 14,
-        color: '#666',
-        alignSelf: 'center',
-        marginTop: 10,
-        marginBottom: 10,
-        width: 300,
+        fontSize: 16,
+        color: '#64748b',
         textAlign: 'center',
+        lineHeight: 26,
+        marginBottom: 28,
+        paddingHorizontal: 24,
+        fontWeight: '400',
     },
-    placeHolder: {
-        height: 100,
-        width: 200,
-        flex: 1,
-        // backgroundColor: 'red',
-        alignSelf: 'center',
-        // borderRadius: 100,
-        marginTop: 10,
-        marginBottom: 10,
+    loadingContainer: {
+        width: '100%',
+        paddingHorizontal: 24,
+        marginBottom: 32,
     },
-    button: {
-        // backgroundColor: '#4A90E2',
-        // marginTop: 10,
-        color: 'white',
-        fontSize: 25,
-        fontWeight: '600',
-    },
-    buttonContainer: {
-        alignSelf: 'center',
+    loadingWrapper: {
+        // backgroundColor: '#f1f5f9',
+        borderRadius: 16,
+        padding: 24,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 10,
-        padding: 10,
-        backgroundColor: '#4A90E2',
-        width: 200,
-    }
+        minHeight: 100,
+        // borderWidth: 1,
+        // borderColor: '#e2e8f0',
+    },
+    button: {
+        backgroundColor: '#4f46e5',
+        borderRadius: 16,
+        paddingVertical: 16,
+        paddingHorizontal: 40,
+        minWidth: 180,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 28,
+        elevation: 4,
+        shadowColor: '#4f46e5',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 17,
+        fontWeight: '700',
+        letterSpacing: 0.5,
+    },
 })

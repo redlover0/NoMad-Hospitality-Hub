@@ -27,11 +27,10 @@ export default function AboutUs() {
                 <View style={styles.rightPlaceholder} />
             </View>
             <View style={styles.content}>
-                <AboutUsCard name="Dhamari" bio="You’re my personal conversational assistant and guide to help me identify and implement clean coding solutions. You'll assist me in structuring my code, refactoring existing implementations, and choosing the most appropriate patterns and practices to achieve my maintainability goals. Please reference this guide attached on how you should interact and respond to me.
-" icon="person-circle-outline" github="https://github.com/Dhamari" linkedin="https://www.linkedin.com/in/dhamari-khan-2000/" />
+                <AboutUsCard name="Dhamari" bio="Love me" icon="person-circle-outline" github="https://github.com/Dhamari" linkedin="https://www.linkedin.com/in/dhamari-khan-2000/" />
             </View>
             <View>
-                <AboutUsCard name="Jordan" bio="I'm a rising 12th grader at Cass Technical Highschool. I assisted in this project, alongside my college Dhamari. My interest stem around coding and computer science with my expertise in Roblox Lua Coding."/>
+                <AboutUsCard name="Jordan" i bio="I'm a rising 12th grader at Cass Technical Highschool. I assisted in this project, alongside my college Dhamari. My interest stem around coding and computer science with my expertise in Roblox Lua Coding."/>
             </View>
         </SafeAreaView>
         </ScrollView>
